@@ -127,3 +127,195 @@ Check directory permissions
 
 # screenshot
 ![alt text](<Screenshot (4)-1.png>)
+
+
+
+# Assignment 6 (APT)
+
+# Part 1: Updating & Upgrading Packages
+
+**1. Checking the Installed APT Version**
+
+Execute the following command to check the installed version of APT:
+```
+apt --version
+```
+Output:
+```
+apt 2.7.14 (amd64)
+```
+
+**2. Updating the Package List**  
+Run the command below to refresh the system's package list:
+```
+sudo apt update
+```
+**Output:**
+```
+Hit:1 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 Packages [15.0 MB]
+Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe Translation-en [5982 kB]
+Get:7 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 Components [3871 k
+
+```
+**Why is this step important?**  
+The `sudo apt update` command is crucial because it updates the system’s package list by fetching the latest information from configured repositories. This ensures that APT is aware of the most recent versions of software and dependencies, reducing installation issues caused by outdated package lists. It also synchronizes repository data, enabling the system to retrieve security patches, bug fixes, and updates. Running this command before `sudo apt upgrade` ensures all installed packages are updated to their latest versions, enhancing system stability and security.
+
+**3. Upgrading Installed Packages**  
+Run:
+```
+sudo apt upgrade -y
+```
+**Difference between Update and Upgrade:**  
+- `update`: Refreshes the package list without installing any updates.  
+- `upgrade`: Installs the latest available versions of installed packages.
+
+**4. Viewing Pending Updates**  
+Check for upgradable packages using:
+```
+apt list --upgradable
+```
+**Output:**
+```
+Listing... Done
+```
+
+### Part 2: Installing & Managing Packages
+
+**5. Searching for a Package**  
+To find an image editing application, run:
+```
+apt search image editor
+```
+The chosen package: **GIMP**
+
+**6. Viewing Package Details**  
+To get detailed information about GIMP, use:
+```
+apt show gimp
+```
+**Dependencies:**  
+GIMP requires several dependencies, including `libgimp2.0t64`, `gimp-data`, `graphviz`, `xdg-utils`, `libaa1`, and various libraries like `libbz2-1.0`, `libcairo2`, `libfontconfig1`, `libglib2.0-0`, `libjpeg8`, and `libpng16-16t64`.
+
+**7. Installing the Package**  
+Run:
+```
+sudo apt install gimp -y
+```
+**Output:**
+```
+Download-Size: 4680 kB
+APT-Manual-Installed: yes
+APT-Sources: http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages
+Description: GNU Image Manipulation Program
+```
+
+**8. Checking Installed Package Version**  
+Execute:
+```
+apt list --installed | grep gimp
+```
+**Output:**
+```
+gimp/noble-updates,now 2.10.36-3ubuntu0.24.04.1 amd64 [installed]
+```
+Installed version: **2.10.36-3ubuntu0.24.04.1**
+
+### Part 3: Removing & Cleaning Packages
+
+**9. Uninstalling a Package**  
+Remove GIMP using:
+```
+sudo apt remove gimp -y
+```
+**Output:**
+```
+The following packages will be REMOVED:
+gimp
+0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
+Removing gimp (2.10.36-3ubuntu0.24.04.1)...
+Processing triggers for man-db (2.12.0-4build2)...
+```
+Yes, the package has been successfully removed.
+
+**10. Removing Configuration Files**  
+To remove GIMP along with its configuration files:
+```
+sudo apt purge gimp -y
+```
+**Difference Between Remove and Purge:**  
+- `remove`: Uninstalls the package while retaining configuration files.
+- `purge`: Uninstalls the package and deletes all configuration files.
+
+**11. Cleaning Up Dependencies**  
+Run:
+```
+sudo apt autoremove -y
+```
+**Why is this important?**  
+The `sudo apt autoremove` command removes unnecessary dependencies that are no longer required, freeing up disk space and improving system performance.
+
+**12. Clearing Downloaded Package Files**  
+Execute:
+```
+sudo apt clean
+```
+**Purpose:**  
+This command clears cached package files from the system without affecting installed software, helping to free up disk space.
+
+### Part 4: Managing Repositories & Troubleshooting
+
+**13. Listing All APT Repositories**  
+Run:
+```
+cat /etc/apt/sources.list
+```
+**Observations:**  
+This file does not contain active repositories but serves as a reference, as Ubuntu now manages repositories in `/etc/apt/sources.list.d/ubuntu.sources` using the `deb822` format.
+
+**14. Adding a New Repository**  
+To add the **universe** repository:
+```
+sudo add-apt-repository universe
+sudo apt update
+```
+**Packages in the Universe Repository:**  
+This repository contains community-supported packages, including open-source software, third-party tools, multimedia software, games, and utilities. These packages are maintained by the community rather than Canonical and may not receive official support.
+
+**15. Simulating an Installation Failure**  
+Attempt to install a non-existent package:
+```
+sudo apt install fakepackage
+```
+**Output:**
+```
+E: Unable to locate package fakepackage
+```
+**Troubleshooting:**  
+- Verify that the package name is spelled correctly.
+- Run `sudo apt update` to refresh the package list.
+- Check enabled repositories using `cat /etc/apt/sources.list`.
+- Use `apt search fakepackage` to see if the package exists.
+- If unavailable, consider adding a PPA or using an alternative installation method.
+
+### Bonus Challenge (Optional)
+
+**Holding & Unholding a Package**  
+Prevent automatic updates for GIMP:
+```
+sudo apt-mark hold gimp
+```
+To allow updates again:
+```
+sudo apt-mark unhold gimp
+```
+**Why Hold a Package?**  
+Holding a package prevents automatic updates, which is useful if an update may introduce bugs, break compatibility, or affect system stability. This ensures control over software versions for a more stable setup.
+
+
+![alt text](as6-3-1.png) 
+![alt text](as6-1-1.png) 
+![alt text](as6-2-1.png)
