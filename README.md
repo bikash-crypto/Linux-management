@@ -440,3 +440,74 @@ ls /mnt/shared
 
 ## Part 3: LXD Implementation
 Installiation 
+
+First, install Snapd if it's not already installed:
+```bash
+sudo apt update
+sudo apt install snapd
+```
+Install LXD using Snap
+```bash
+sudo snap install lxd
+```
+![alt text](image-13.png)
+
+Basic LXD command
+
+1.Create a new container ans list it
+```bash
+lxc launch ubuntu:24.04 basyal-container
+lxc list
+```
+![alt text](image-14.png)
+
+2. Start and stop the container
+
+```bash
+lxc start basyal
+lxc stop basyal
+lxc list
+```
+![alt text](image-15.png)
+
+3. Delete the container
+```bash
+lxc delete basyal
+lxc list
+```
+![alt text](image-16.png)
+
+## Part 4: Docker
+Installation
+
+```bash
+sudo apt update
+sudo apt install docker.io
+```
+Verify the installation
+
+```bash
+docker --version
+```
+
+![alt text](image-17.png)
+
+Making directory and create nano file
+
+```bash
+mkdir myapp
+cd myapp
+echo "hello world" > index.html
+```
+![alt text](image-18.png)
+
+Run Docker
+```bash
+docker ps
+docker run -p 8080:80 bikash-basyal
+```
+
+![alt text](image-19.png)
+
+
+
